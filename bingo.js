@@ -3,16 +3,21 @@ var possibleGoals;
 function assert(value) {
 	if (!value) {
 		debugger;
-		assert("ASSERTION FAILED. Someone has some debugging to do...");
+		alert("ASSERTION FAILED. Someone has some debugging to do...");
 	}
 }
 
 function init() {
 	// set cell height to the width
 	// width was determined by css
+	let minDimension = 600;
+
+	let dimension = Math.max(minDimension, 0.8 * Math.min(window.innerWidth, window.innerHeight));
+	let cellDimension = dimension / 5.0;
+
 	$("td").each(function() {
-		let width = $(this).width();
-		$(this).height(width);
+		$(this).width(cellDimension);
+		$(this).height(cellDimension);
 	});
 
 	// note: id must equal the index in the array.
@@ -46,7 +51,7 @@ function init() {
 			description: "Die to all 4 minibosses",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
-			tooltip: "They must deal the killing blow that depletes your health to 0. Eyerok pushing off the level does NOT count."
+			tooltip: "They must deal the killing blow that depletes your health to 0. Eyerok pushing you off the level does NOT count."
 		},
 
 		{
@@ -107,7 +112,7 @@ function init() {
 		
 		{
 			id: 11,
-			description: "Jump off the ships in JRB and RR",
+			description: "Fall off the ships in both JRB and RR; Collect a star after each",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
 			tooltip: "No extra explanation"
@@ -134,7 +139,7 @@ function init() {
 			description: "Collect the red coin star in CCM with 0 or 1 A presses",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
-			tooltip: "No extra explanation"
+			tooltip: "Hint: You will almost certainly need 1 A press. Use it wisely."
 		},
 
 
@@ -390,7 +395,7 @@ function init() {
 			description: "Do Bowser throws in the opposite direction you normally do",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
-			tooltip: "Throws that require <1 full revolution can be either direction."
+			tooltip: "Throws that require <1 full revolution can be either direction"
 		},
 		
 		{
@@ -506,7 +511,7 @@ function init() {
 		},
 		
 		{
-			id: 58,
+			id: 59,
 			description: "Collect 5 stars with names starting with F",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
@@ -514,7 +519,7 @@ function init() {
 		},
 		
 		{
-			id: 59,
+			id: 60,
 			description: "Collect 5 stars with names starting with B",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
@@ -522,7 +527,7 @@ function init() {
 		},
 		
 		{
-			id: 60
+			id: 61,
 			description: "Collect 5 stars with names starting with S",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
@@ -530,7 +535,7 @@ function init() {
 		},
 		
 		{
-			id: 61,
+			id: 62,
 			description: "Collect 5 stars with names starting with a vowel (A, E, I, O, U)",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
@@ -538,7 +543,7 @@ function init() {
 		},
 		
 		{
-			id: 62,
+			id: 63,
 			description: "Trigger 4 \"star spawn\" animations in a single visit to a level, and collect a star",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
@@ -546,7 +551,7 @@ function init() {
 		},
 		
 		{
-			id: 63,
+			id: 64,
 			description: "Collect 2 stars while having exactly 99 coins",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
@@ -554,7 +559,7 @@ function init() {
 		},
 		
 		{
-			id: 64,
+			id: 65,
 			description: "Collect 10 different caps from boxes, but don't use them for anything",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
@@ -562,7 +567,7 @@ function init() {
 		},
 		
 		{
-			id: 65,
+			id: 66,
 			description: "Take 7 warps (no repeats)",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
@@ -570,23 +575,23 @@ function init() {
 		},
 		
 		{
-			id: 66,
+			id: 67,
 			description: "No ledge grabs *",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
-			tooltip: "If you ledge grab you must die or exit the stage through the start menu. If you are outside a level you must die before continuing."
+			tooltip: "If you ledge grab you must die or exit the stage through the start menu; If you are outside a level you must die before continuing"
 		},
 
 		{
-			id: 67,
+			id: 68,
 			description: "No Z button *",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
-			tooltip: "If you press Z you must die or exit the stage through the start menu. If you are outside a level you must die before continuing."
+			tooltip: "If you press Z you must die or exit the stage through the start menu; If you are outside a level you must die before continuing"
 		},
 
 		{
-			id: 66,
+			id: 69,
 			description: "Experience death by fire, drowning, and electrecution",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
@@ -594,7 +599,7 @@ function init() {
 		},
 
 		{
-			id: 67,
+			id: 70,
 			description: "Lose and recover Mario's hat in SL, SSL, and TTM",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
@@ -602,32 +607,8 @@ function init() {
 		},
 
 		{
-			id: 68,
-			description: "Roll both logs to the opposite end in LLL and TTM. Collect a star after each.",
-			difficulty: -1,
-			tags: "TODO", // synergy tags
-			tooltip: "No extra explanation"
-		},
-
-		{
-			id: 69,
-			description: "Get thrown by all 5 Chuckyas",
-			difficulty: -1,
-			tags: "TODO", // synergy tags
-			tooltip: "No extra explanation"
-		},
-
-		{
-			id: 70,
-			description: "Kill 15 different enemies with Mario's stationary \"breakdance\" (Z+B)",
-			difficulty: -1,
-			tags: "TODO", // synergy tags
-			tooltip: "You may kill multiple of an enemy type (e.g., goombas), but you may not kill an enemy, then respawn it, then kill it again."
-		},
-
-		{
 			id: 71,
-			description: "Destroy all 5 crazy-boxes and collect every resulting coin",
+			description: "Roll both logs to the opposite end in LLL and TTM; Collect a star after each",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
 			tooltip: "No extra explanation"
@@ -635,7 +616,7 @@ function init() {
 
 		{
 			id: 72,
-			description: "Collect bouth of the coins outside the castle. Collect the resulting 1-up",
+			description: "Get thrown by all 5 Chuckyas",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
 			tooltip: "No extra explanation"
@@ -643,15 +624,15 @@ function init() {
 
 		{
 			id: 73,
-			description: "Get tossed by all 4 heave-hos",
+			description: "Kill 15 different enemies with Mario's stationary \"breakdance\" (Z+B)",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
-			tooltip: "No extra explanation"
+			tooltip: "You may kill multiple of an enemy type (e.g., goombas), but you may not kill an enemy, then respawn it, then kill it again"
 		},
 
 		{
 			id: 74,
-			description: "Press 4 different purple ! switches",
+			description: "Destroy all 5 crazy-boxes and collect every resulting coin",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
 			tooltip: "No extra explanation"
@@ -659,6 +640,30 @@ function init() {
 
 		{
 			id: 75,
+			description: "Collect bouth of the coins outside the castle; Collect the resulting 1-up",
+			difficulty: -1,
+			tags: "TODO", // synergy tags
+			tooltip: "No extra explanation"
+		},
+
+		{
+			id: 76,
+			description: "Get tossed by all 4 heave-hos",
+			difficulty: -1,
+			tags: "TODO", // synergy tags
+			tooltip: "No extra explanation"
+		},
+
+		{
+			id: 77,
+			description: "Press 4 different purple ! switches",
+			difficulty: -1,
+			tags: "TODO", // synergy tags
+			tooltip: "No extra explanation"
+		},
+
+		{
+			id: 78,
 			description: "Complete BitDW with your controller upside down",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
@@ -679,6 +684,7 @@ function init() {
 		// assert(goal.difficulty > 0);
 	}
 
+	// Initialize each cell
 	for(let i = 0; i < 5; i++) {
 		for(let j = 0; j < 5; j++) {
 			let goal = possibleGoals[i * 5 + j];
@@ -692,6 +698,19 @@ function init() {
 			
 			cell.text(goal.description);
 			cell.prop("title", goal.tooltip);
+
+			cell.on("click", function() {
+				if ($(this).hasClass("greenCell")) {
+					$(this).addClass("redCell");
+					$(this).removeClass("greenCell");
+				}
+				else if ($(this).hasClass("redCell")) {
+					$(this).removeClass("redCell");
+				}
+				else {
+					$(this).addClass("greenCell");
+				}
+			});
 		}
 	}
 

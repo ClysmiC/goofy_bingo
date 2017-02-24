@@ -1,7 +1,6 @@
 table {
+	margin: 25px;
 	border-collapse: collapse;
-	width: 80%;
-	/* height = width set by javascript */
 
 	font-family: arial;
 	font-size: 80%;
@@ -13,10 +12,34 @@ tbody {
 	display: table-row-group;
 }
 
+th {
+	background-color: Gray;
+	border: 1px solid black;
+	padding: 3px;
+}
+
 td {
 	display: table-cell;
 	border: 1px solid red;
 	width: 16%;
 	padding: 5px;
 	cursor: pointer;
+	background-color: LightGray;
+}
+td:hover {
+	background-color: Gray;
+}
+
+td.greenCell {
+	background-color: LightGreen;
+}
+td.greenCell:hover {
+	background-color: Green;
+}
+
+td.redCell {
+	background-color: LightCoral;
+}
+td.redCell:hover {
+	background-color: Red;
 }
