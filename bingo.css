@@ -1,0 +1,22 @@
+table {
+	border-collapse: collapse;
+	width: 80%;
+	/* height = width set by javascript */
+
+	font-family: arial;
+	font-size: 80%;
+	text-align: center;
+	text-wrap: break-word;
+}
+
+tbody {
+	display: table-row-group;
+}
+
+td {
+	display: table-cell;
+	border: 1px solid red;
+	width: 16%;
+	padding: 5px;
+	cursor: pointer;
+}
