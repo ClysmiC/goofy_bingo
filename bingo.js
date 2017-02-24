@@ -684,10 +684,89 @@ function init() {
 		// assert(goal.difficulty > 0);
 	}
 
+	function getCellsForHeader(headerId) {
+		let cells = [];
+
+		if(headerId === "tlbr") {
+			cells.push($("#0_0"));
+			cells.push($("#1_1"));
+			cells.push($("#2_2"));
+			cells.push($("#3_3"));
+			cells.push($("#4_4"));
+		}
+		else if(headerId === "bltr") {
+			cells.push($("#4_0"));
+			cells.push($("#3_1"));
+			cells.push($("#2_2"));
+			cells.push($("#1_3"));
+			cells.push($("#0_4"));
+		}
+		else if (headerId.startsWith("col")) {
+			let col = headerId.slice(-1);
+			col = parseInt(col) - 1;
+
+			for (let i = 0; i < 5; i++) {
+				cells.push($("#" + i + "_" + col));
+			}
+		}
+		else if (headerId.startsWith("row")) {
+			let row = headerId.slice(-1);
+			row = parseInt(row) - 1;
+
+			for (let i = 0; i < 5; i++) {
+				cells.push($("#" + row + "_" + i));
+			}
+		}
+		else {
+			assert(false);
+		}
+
+		assert(cells.length === 5);
+		return cells;
+	}
+
+	// Initialize row/column headers
+	$("th").each(function() {
+		$(this).on("mouseenter", function() {
+			let cells = getCellsForHeader($(this).attr("id"));
+
+			for (let i = 0; i < cells.length; i++) {
+				let cell = cells[i];
+				cell.addClass("fakeHover");
+			}
+		});
+
+		$(this).on("mouseout", function() {
+			let cells = getCellsForHeader($(this).attr("id"));
+
+			for (let i = 0; i < cells.length; i++) {
+				let cell = cells[i];
+				cell.removeClass("fakeHover");
+			}
+		});
+	});
+
+	// Create random ordering for goals to be selected
+	let goalOrder = [];
+	for (let i = 0; i < possibleGoals.length; i++) {
+		goalOrder[i] = i;
+	}
+	
+	// Shuffle the order
+	for (let index = goalOrder.length - 1; index > 0; index--) {
+		
+		let selectionIndex = Math.floor(Math.random() * index);
+
+		let temp = goalOrder[index];
+		goalOrder[index] = goalOrder[selectionIndex];
+		goalOrder[selectionIndex] = temp;
+	}
+
 	// Initialize each cell
 	for(let i = 0; i < 5; i++) {
 		for(let j = 0; j < 5; j++) {
-			let goal = possibleGoals[i * 5 + j];
+			let goalId = goalOrder[i * 5 + j];
+			let goal = possibleGoals[goalId];
 			
 			let id = i + "_" + j;
 			let cell = $("#" + id);
@@ -713,7 +792,6 @@ function init() {
 			});
 		}
 	}
-
 
 	// enable qtip for better tooltips
 	$('[title!=""]').qtip({
