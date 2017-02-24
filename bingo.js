@@ -8,6 +8,21 @@ function assert(value) {
 }
 
 function init() {
+	let seed;
+
+	// Check URL for random seed. If none exists or invalid, generate one and redirect
+	// to the page with the seed as the query param
+	if(location.href.includes("?seed=")) {
+		let seedIndex = location.href.indexOf("?seed=");
+		seedIndex += "?seed=".length;
+
+		seed = parseInt(location.href.slice(seedIndex));
+	}
+	else {
+		let generatedSeed = Date.now();
+		location.href = "?seed=" + generatedSeed;
+	}
+
 	// set cell height to the width
 	// width was determined by css
 	let minDimension = 600;
@@ -747,11 +762,13 @@ function init() {
 	});
 
 	// Create random ordering for goals to be selected
+	Math.seedrandom(seed);
+
 	let goalOrder = [];
 	for (let i = 0; i < possibleGoals.length; i++) {
 		goalOrder[i] = i;
 	}
-	
+
 	// Shuffle the order
 	for (let index = goalOrder.length - 1; index > 0; index--) {
 		
