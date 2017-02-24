@@ -1,5 +1,8 @@
+#mainDiv {
+}
+
 table {
-	margin: 25px;
+	margin: 50px 80px 0px 50px;
 	border-collapse: collapse;
 
 	font-family: arial;
@@ -10,6 +13,7 @@ table {
 }
 
 tbody {
+	float: left;
 	display: table-row-group;
 }
 
@@ -45,4 +49,39 @@ td.redCell {
 }
 td.redCell:hover {
 	background-color: Red;
+}
+
+#cardPanel {
+	display: inline-block;
+}
+#rightPanel {
+	display: inline-block;
+	vertical-align: top;
+	width: 25%;
+	position: relative;
+}
+
+#newCardBtn {
+	padding: 10px;
+	margin-left: 2em;
+	margin-bottom: 2em;
+}
+
+h2 {
+	font-family: arial;
+	font-size: 150%;
+}
+
+#aboutText {
+	font-size: 90%;
+	font-family: arial;
+	line-height: 1.5em;
+}
+
+#creditText {
+	font-size: 70%;
+	font-family: arial;
+	position: absolute;
+	bottom: 0px;
+	/* vertical-align: bottom; */
 }

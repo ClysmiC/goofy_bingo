@@ -4,79 +4,128 @@
     <meta charset="UTF-8">
     <title>SM64 Retard Bingo</title>
 
-	<link rel="stylesheet" type="text/css" href="bingo.css">
-	<link rel="stylesheet" type="text/css" href="jquery.qtip.min.css">
+    <link rel="stylesheet" type="text/css" href="bingo.css">
+    <link rel="stylesheet" type="text/css" href="jquery.qtip.min.css">
   </head>
 
   
   <body>
-	<div id="card">
-	  <table>
-		<tbody>
-		<tr>
-		  <th id="tlbr">TL-BR</th>
-		  <th id="col1">COL 1</th>
-		  <th id="col2">COL 2</th>
-		  <th id="col3">COL 3</th>
-		  <th id="col4">COL 4</th>
-		  <th id="col5">COL 5</th>
-		</tr>
-		
-		<tr>
-		  <th id="row1">ROW 1</th>
-		  <td id="0_0">A</td>
-		  <td id="0_1">B</td>
-		  <td id="0_2">C</td>
-		  <td id="0_3">D</td>
-		  <td id="0_4">E</td>
-		</tr>
-		
-		<tr>
-		  <th id="row2">ROW 2</th>
-		  <td id="1_0">F</td>
-		  <td id="1_1">G</td>
-		  <td id="1_2">H</td>
-		  <td id="1_3">I</td>
-		  <td id="1_4">J</td>
-		</tr>
-		
-		<tr>
-		  <th id="row3">ROW 3</th>
-		  <td id="2_0">K</td>
-		  <td id="2_1">L</td>
-		  <td id="2_2">M</p></td>
-		  <td id="2_3">N</td>
-		  <td id="2_4">O</td>
-		</tr>
-		
-		<tr>
-		  <th id="row4">ROW 4</th>
-		  <td id="3_0">P</td>
-		  <td id="3_1">Q</td>
-		  <td id="3_2">R</td>
-		  <td id="3_3">S</td>
-		  <td id="3_4">T</td>
-		</tr>
-		
-		<tr>
-		  <th id="row5">ROW 5</th>
-		  <td id="4_0">U</td>
-		  <td id="4_1">V</td>
-		  <td id="4_2">W</td>
-		  <td id="4_3">X</td>
-		  <td id="4_4">Y</td>
-		</tr>
+    <div id="mainDiv">
+      <div id="cardPanel">
+        <table>
+          <tbody>
+            <tr>
+              <th id="tlbr">TL-BR</th>
+              <th id="col1">COL 1</th>
+              <th id="col2">COL 2</th>
+              <th id="col3">COL 3</th>
+              <th id="col4">COL 4</th>
+              <th id="col5">COL 5</th>
+            </tr>
+            
+            <tr>
+              <th id="row1">ROW 1</th>
+              <td id="0_0">A</td>
+              <td id="0_1">B</td>
+              <td id="0_2">C</td>
+              <td id="0_3">D</td>
+              <td id="0_4">E</td>
+            </tr>
+            
+            <tr>
+              <th id="row2">ROW 2</th>
+              <td id="1_0">F</td>
+              <td id="1_1">G</td>
+              <td id="1_2">H</td>
+              <td id="1_3">I</td>
+              <td id="1_4">J</td>
+            </tr>
+            
+            <tr>
+              <th id="row3">ROW 3</th>
+              <td id="2_0">K</td>
+              <td id="2_1">L</td>
+              <td id="2_2">M</td>
+              <td id="2_3">N</td>
+              <td id="2_4">O</td>
+            </tr>
 
-		<tr>
-		  <th id="bltr">BL-TR</th>
-		</tr>
-		</tbody>
-	  </table>
-	</div>
-	
-	<script src="jquery-3.1.1.min.js"></script>
-	<script src="jquery.qtip.min.js"></script>
-	<script src="seedrandom.js"></script>
-	<script src="bingo.js"></script>
+            <tr>
+              <th id="row4">ROW 4</th>
+              <td id="3_0">P</td>
+              <td id="3_1">Q</td>
+              <td id="3_2">R</td>
+              <td id="3_3">S</td>
+              <td id="3_4">T</td>
+            </tr>
+
+            <tr>
+              <th id="row5">ROW 5</th>
+              <td id="4_0">U</td>
+              <td id="4_1">V</td>
+              <td id="4_2">W</td>
+              <td id="4_3">X</td>
+              <td id="4_4">Y</td>
+            </tr>
+
+            <tr>
+              <th id="bltr">BL-TR</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="rightPanel">
+        <h2>Super Mario 64 Retard Bingo!</h2>
+
+        <br>
+
+        <button id="newCardBtn">
+          New Card!
+        </button>
+
+        <hr>
+
+        <h2 id="aboutLabel">About</h2>
+
+        <br>
+
+        <div id="aboutText">
+          Retard bingo is just like a normal SM64 bingo... but all of the goals are retarded. These are the basic rules:
+          <ul>
+            <li>Start from a new file and reset on GO!</li>
+            <li>You are done when you collect the final bowser star to beat the game, with all 5 objectives completed.</li>
+            <li>LBLJ and SBLJ are not allowed. Mips Clip and other BLJs are allowed.</li>
+          </ul>
+          Note that you can hover over many of the goals to clarify the rules for that goal. Some of the tooltips even offer small hints.
+          
+          <br>
+          <br>    
+
+          Click on a cell to turn it green or red for bookkeeping purposes. Click on a Column or Row header for a popout window, just like you are used to with normal SRL bingos (NOT YET IMPLEMENTED).
+        </div>
+
+        <div id="creditText">
+          Programming: ClysmiC
+
+          <br>
+
+          Goal Concepts: ClysmiC, Dazee, Dublin, Hellool, Joey, Waterbird
+
+          <br>
+
+          Inspiration: <a href="http://www.speedrunslive.com/tools/sm64-bingo/">Super Mario 64 Bingo on SpeedRunsLive</a>
+
+          <br>
+
+          Ideas? Bugs? Contact <a href="https://twitter.com/ClysmiC11">@ClysmiC11</a>
+        </div>
+      </div>
+    </div>
+
+    <script src="jquery-3.1.1.min.js"></script>
+    <script src="jquery.qtip.min.js"></script>
+    <script src="seedrandom.js"></script>
+    <script src="bingo.js"></script>
   </body>
 </html>

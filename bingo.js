@@ -20,20 +20,27 @@ function init() {
 	}
 	else {
 		let generatedSeed = Date.now();
-		location.href = "?seed=" + generatedSeed;
+		location.href = "?seed=" + generatedSeed;  // REDIRECT
 	}
 
 	// set cell height to the width
 	// width was determined by css
-	let minDimension = 600;
+	let minDimension = 400;
+	let maxDimension = 800;
 
-	let dimension = Math.max(minDimension, 0.8 * Math.min(window.innerWidth, window.innerHeight));
+	let dimension = 0.7 * Math.min(window.innerWidth, window.innerHeight);
+	dimension = Math.max(minDimension, dimension);
+	dimension = Math.min(maxDimension, dimension);
+
 	let cellDimension = dimension / 5.0;
 
 	$("td").each(function() {
 		$(this).width(cellDimension);
 		$(this).height(cellDimension);
 	});
+
+	// Adjust right panel so it is aligned properly
+	$("#rightPanel").height($("#cardPanel").height());
 
 	// note: id must equal the index in the array.
 	possibleGoals = [
@@ -809,6 +816,12 @@ function init() {
 			});
 		}
 	}
+
+	// Initialize new card button
+	$("#newCardBtn").on("click", function() {
+		let generatedSeed = Date.now();
+		location.href = "?seed=" + generatedSeed;  // REDIRECT
+	});
 
 	// enable qtip for better tooltips
 	$('[title!=""]').qtip({
