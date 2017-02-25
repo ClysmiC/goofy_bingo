@@ -40,7 +40,15 @@ function init() {
 	});
 
 	// Adjust right panel so it is aligned properly
-	$("#rightPanel").height($("#cardPanel").height());
+	let cardHeight = $("#cardPanel").height();
+	$("#rightPanel").height(cardHeight + 0.5 * (window.innerHeight - cardHeight));
+	$("#rightPanel").width(window.innerWidth - $("#cardPanel").width() - 50);
+
+	// If about text runs too low, hide the credits text so there isn't overlap
+	if ($("#aboutText").offset().top + $("#aboutText").outerHeight(true) >
+		$("#cardPanel").offset().top + $("#cardPanel").outerHeight(true)) {
+		$("#creditText").hide();
+	}
 
 	initGoals();
 
