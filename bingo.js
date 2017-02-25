@@ -652,10 +652,10 @@ function initGoals() {
 		},
 		
 		{
-			description: "Take 7 warps (no repeats)",
+			description: "Take 7 warps (no repeats) (\u2020)",
 			difficulty: -1,
 			tags: "TODO", // synergy tags
-			tooltip: "TODO: Can you take it both ways?"
+			tooltip: "Taking the same warp both directions only counts as 1."
 		},
 		
 		{
