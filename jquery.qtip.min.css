@@ -5,7 +5,8 @@
     display: none;
     max-width: 280px;
     min-width: 50px;
-    font-size: 10.5px;
+    font-size: 12.0px;
+	font-family: arial;
     line-height: 12px;
     direction: ltr;
     box-shadow: none;
