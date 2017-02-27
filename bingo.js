@@ -187,6 +187,15 @@ function init() {
 	});
 
 	let goalIndex = 0;
+
+	// Grabs the next goal! Gets called 2 ways:
+	// 1. Called initially to grab random goals to fill in a card. Doesn't consider difficulty/legality.
+	// 2. Called with parameters to find a "replacement" goal of a certain difficulty and
+	//    that is legal considering the other goals in that row/column
+	//
+	// row (optional): row of goal being replaced
+	// col (optional): col of goal being replaced
+	// difficulty (optional): target difficulty of replacement goal
 	function nextGoal(row, col, difficulty) {
 		let valid = false;
 
@@ -204,6 +213,9 @@ function init() {
 			}
 		}
 		else {
+			assert(row != null);
+			assert(col != null);
+
 			if (difficulty < 1) {
 				difficulty = 1;
 			}
@@ -235,7 +247,44 @@ function init() {
 					let goal = goalsByDifficulty[newGoalDifficulty][j];
 
 					if (goal.row == null) {
-						return goal;
+						let goals = [];
+
+						// Unused goal found. Now verify it is legal in context.
+
+						let rowGoals = getGoalsForHeader("row" + (row + 1));
+						goals = goals.concat(rowGoals);
+
+						let colGoals = getGoalsForHeader("col" + (col + 1));
+						goals = goals.concat(colGoals);
+
+						if (row === col) {
+							let tlbrGoals = getGoalsForHeader("tlbr");
+							goals = goals.concat(tlbrGoals);
+						}
+
+						if (row + col === 4) {
+							let bltrGoals = getGoalsForHeader("bltr");
+							goals = goals.concat(bltrGoals);
+						}
+
+						let isValid = true;
+
+						for (let k = 0; k < goals.length; k++) {
+							let otherGoal = goals[k];
+
+							if (otherGoal.row === row && otherGoal.col === col) {
+								continue;  // this is the goal being replaced
+							}
+
+							if (!isAllowed(goal, otherGoal)) {
+								isValid = false;
+								break;
+							}
+						}
+
+						if (isValid) {
+							return goal;
+						}
 					}
 				}
 			}
@@ -273,9 +322,12 @@ function init() {
 	let iterations = 0;
 	let headers = ["row1", "row2", "row3", "row4", "row5", "col1", "col2", "col3", "col4", "col5", "tlbr", "bltr"];
 	let lowDifficultyLimit = baseDifficulty + Math.floor(5 * averageDifficulty - Math.sqrt(5 * difficultyStdDev));
-	let highDifficultyLimit = baseDifficulty + Math.ceil(5 * averageDifficulty + Math.sqrt(10 * difficultyStdDev)); // more leeway on the high side
+	let highDifficultyLimit = baseDifficulty + Math.ceil(5 * averageDifficulty + 1.2 * Math.sqrt(5 * difficultyStdDev));  // give a litle more leeway on the harder side :)
 	
 	do {
+		if (iterations === 15) {
+			console.log("debug");
+		}
 		nothingChanged = true;
 
 		let dbg_msg = "";
@@ -293,7 +345,8 @@ function init() {
 			dbg_msg += "\n";
 		}
 
-		console.log(dbg_msg);
+		// DEV
+		// console.log(dbg_msg);
 
 		for (let i = 0; i < headers.length; i++) {
 			let header = headers[i];
@@ -321,11 +374,14 @@ function init() {
 			else if(evaluation.totalDifficulty < lowDifficultyLimit ||
 					evaluation.totalDifficulty > highDifficultyLimit) {
 
+				// our new target should be *slightly* higher than average, because
+				// we can expect goal synergies to bring it down
 				let midDifficulty = (lowDifficultyLimit + highDifficultyLimit) / 2;
-				
+				let targetCombinedDifficulties = midDifficulty + 5;
+
 				// try to distribute the increase across the whole row so it doesn't
 				// mess up a perpendicular row
-				let deltaPerCell = Math.round((midDifficulty - evaluation.totalDifficulty) / 5);
+				let deltaPerCell = Math.round((targetCombinedDifficulties - evaluation.totalDifficulty) / 5);
 
 				if (deltaPerCell === 0) {
 					if(evaluation.totalDifficulty < lowDifficultyLimit) { deltaPerCell = 1; }
@@ -355,7 +411,7 @@ function init() {
 		iterations += 1;
 		console.log("Iteration " + iterations);
 
-	} while (!nothingChanged && iterations <= 200)
+	} while (!nothingChanged && iterations <= 50)
 
 	// Show the cells once they are finalized
 	$("td").css("visibility", "visible");
