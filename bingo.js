@@ -189,11 +189,6 @@ function init() {
 	let goalIndex = 0;
 	function nextGoal(row, col, difficulty) {
 		let valid = false;
-		
-		if(difficulty != null &&
-		   (difficulty <= 0 || difficulty >= goalsByDifficulty.length)) {
-			return null;
-		}
 
 		if (difficulty == null) {
 			
@@ -209,18 +204,41 @@ function init() {
 			}
 		}
 		else {
-
-			// Find a goal with the exact specified difficulty,
-			// or return null
-			
-			for (let i = 0; i < goalsByDifficulty[difficulty].length; i++) {
-				let goal = goalsByDifficulty[difficulty][i];
-
-				if (goal.row == null) {
-					return goal;
-				}
+			if (difficulty < 1) {
+				difficulty = 1;
+			}
+			if (difficulty > goalsByDifficulty.length) {
+				difficulty = goalsByDifficulty.length;
 			}
 
+			// Find first goal closest to specified difficulty
+			let i = 0;
+			let goalFound = false;
+			while (true) {
+				i++;
+
+				let newGoalDifficulty;
+
+				// check for same difficulty, then +1, then -1, then +2, then -2, ...
+				if (i % 2 === 0) {
+					newGoalDifficulty = difficulty + Math.floor(i / 2);
+				}
+				else {
+					newGoalDifficulty = difficulty - Math.floor(i / 2);
+				}
+
+				if (newGoalDifficulty <= 0 || newGoalDifficulty >= goalsByDifficulty.length) {
+					continue;
+				}
+				
+				for (let j = 0; j < goalsByDifficulty[newGoalDifficulty].length; j++) {
+					let goal = goalsByDifficulty[newGoalDifficulty][j];
+
+					if (goal.row == null) {
+						return goal;
+					}
+				}
+			}
 		}
 
 		return null;
@@ -294,46 +312,24 @@ function init() {
 
 					let row = goal1.row;
 					let col = goal1.col;
-
-					let newGoal = null;
-					let k = 1;
-					do {
-						let newGoalDifficulty;
-
-						// check for same difficulty, then +1, then -1, then +2, then -2, ...
-						if (k % 2 === 0) {
-							newGoalDifficulty = goal1.difficulty + Math.floor(k / 2);
-						}
-						else {
-							newGoalDifficulty = goal1.difficulty - Math.floor(k / 2);
-						}
-						
-						newGoal = nextGoal(row, col, newGoalDifficulty);
-
-						if (newGoal != null) {
-							setGoal(row, col, newGoal);
-						}
-
-						k++;
-					} while(newGoal == null)
-					
-
+					newGoal = nextGoal(row, col, goal1.difficulty);
+					setGoal(row, col, newGoal);
 				}
 				
 				nothingChanged = false;
 			}
 			else if(evaluation.totalDifficulty < lowDifficultyLimit ||
 					evaluation.totalDifficulty > highDifficultyLimit) {
+
+				let midDifficulty = (lowDifficultyLimit + highDifficultyLimit) / 2;
+				
 				// try to distribute the increase across the whole row so it doesn't
 				// mess up a perpendicular row
-				let deltaPerCell;
-				let tooLow = evaluation.totalDifficulty < lowDifficultyLimit;
+				let deltaPerCell = Math.round((midDifficulty - evaluation.totalDifficulty) / 5);
 
-				if (tooLow) {
-					deltaPerCell = Math.ceil((lowDifficultyLimit - evaluation.totalDifficulty) / 5);
-				}
-				else {
-					deltaPerCell = Math.ceil((highDifficultyLimit - evaluation.totalDifficulty) / 5);
+				if (deltaPerCell === 0) {
+					if(evaluation.totalDifficulty < lowDifficultyLimit) { deltaPerCell = 1; }
+					else { deltaPerCell = -1; }
 				}
 
 				// we won't always be able to increase by deltaPerCell, so this accumulates
@@ -345,36 +341,11 @@ function init() {
 					let col = goal.col;
 					
 					let targetDifficulty = goal.difficulty + deltaPerCell - accumulatedError;
-					let newGoalFound = false;
-					let newGoalDifficulty = targetDifficulty;
 					
-					while (!newGoalFound && newGoalDifficulty < goalsByDifficulty.length && newGoalDifficulty >= 0) {
-						let newGoal = nextGoal(row, col, newGoalDifficulty);
+					let newGoal = nextGoal(row, col, targetDifficulty);
+					setGoal(row, col, newGoal);
 
-						if (newGoal != null) {
-							newGoalFound = true;
-							setGoal(row, col, newGoal);
-						}
-						else {
-							if (tooLow) {
-								newGoalDifficulty++;
-							}
-							else {
-								newGoalDifficulty--;
-							}
-						}
-					}
-
-					if (newGoalFound) {
-						// the goal we found was slightly too hard/easy,
-						// so next replacement should be slightly easier/harder
-						accumulatedError = newGoalDifficulty - targetDifficulty;
-					}
-					else {
-						// we couldn't find a harder/easier goal, so
-						// next replacement needs to pick up the slack
-						accumulatedError = goal.difficulty - targetDifficulty;
-					}
+					accumulatedError = newGoal.difficulty - targetDifficulty;
 				}
 				
 				nothingChanged = false;
