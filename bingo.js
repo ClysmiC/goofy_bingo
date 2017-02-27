@@ -188,109 +188,93 @@ function init() {
 
 	let goalIndex = 0;
 
-	// Grabs the next goal! Gets called 2 ways:
-	// 1. Called initially to grab random goals to fill in a card. Doesn't consider difficulty/legality.
-	// 2. Called with parameters to find a "replacement" goal of a certain difficulty and
-	//    that is legal considering the other goals in that row/column
-	//
-	// row (optional): row of goal being replaced
-	// col (optional): col of goal being replaced
-	// difficulty (optional): target difficulty of replacement goal
-	function nextGoal(row, col, difficulty) {
-		let valid = false;
 
-		if (difficulty == null) {
-			
-			// Just grab the next available goal
-			
-			while(true) {
-				let goal = possibleGoals[goalOrder[goalIndex]];
-				goalIndex = (goalIndex + 1) % possibleGoals.length;
+	// Grabs a random, available goal
+	function nextGoal() {
+		// Just grab the next available goal
+		while(true) {
+			let goal = possibleGoals[goalOrder[goalIndex]];
+			goalIndex = (goalIndex + 1) % possibleGoals.length;
 
-				if (goal.row == null) {
-					return goal;
-				}
+			if (goal.row == null) {
+				return goal;
 			}
 		}
-		else {
-			assert(row != null);
-			assert(col != null);
+	}
 
-			if (difficulty < 1) {
-				difficulty = 1;
+	// Finds the goal with difficulty closest to the specified parameter,
+	// that legally fits in the specified row/column considering legal tag combinations
+	function replaceGoal(row, col, difficulty) {
+		if (difficulty < 1) {
+			difficulty = 1;
+		}
+		if (difficulty > goalsByDifficulty.length) {
+			difficulty = goalsByDifficulty.length;
+		}
+
+		let i = 0;
+		while (true) {
+			i++;
+
+			let newGoalDifficulty;
+
+			// check for same difficulty, then +1, then -1, then +2, then -2, ...
+			if (i % 2 === 0) {
+				newGoalDifficulty = difficulty + Math.floor(i / 2);
 			}
-			if (difficulty > goalsByDifficulty.length) {
-				difficulty = goalsByDifficulty.length;
+			else {
+				newGoalDifficulty = difficulty - Math.floor(i / 2);
 			}
 
-			// Find first goal closest to specified difficulty
-			let i = 0;
-			let goalFound = false;
-			while (true) {
-				i++;
+			if (newGoalDifficulty <= 0 || newGoalDifficulty >= goalsByDifficulty.length) {
+				continue;
+			}
+			
+			for (let j = 0; j < goalsByDifficulty[newGoalDifficulty].length; j++) {
+				let goal = goalsByDifficulty[newGoalDifficulty][j];
 
-				let newGoalDifficulty;
+				if (goal.row == null) {
+					let goals = [];
 
-				// check for same difficulty, then +1, then -1, then +2, then -2, ...
-				if (i % 2 === 0) {
-					newGoalDifficulty = difficulty + Math.floor(i / 2);
-				}
-				else {
-					newGoalDifficulty = difficulty - Math.floor(i / 2);
-				}
+					// Unused goal found. Now verify it is legal in context.
 
-				if (newGoalDifficulty <= 0 || newGoalDifficulty >= goalsByDifficulty.length) {
-					continue;
-				}
-				
-				for (let j = 0; j < goalsByDifficulty[newGoalDifficulty].length; j++) {
-					let goal = goalsByDifficulty[newGoalDifficulty][j];
+					let rowGoals = getGoalsForHeader("row" + (row + 1));
+					goals = goals.concat(rowGoals);
 
-					if (goal.row == null) {
-						let goals = [];
+					let colGoals = getGoalsForHeader("col" + (col + 1));
+					goals = goals.concat(colGoals);
 
-						// Unused goal found. Now verify it is legal in context.
+					if (row === col) {
+						let tlbrGoals = getGoalsForHeader("tlbr");
+						goals = goals.concat(tlbrGoals);
+					}
 
-						let rowGoals = getGoalsForHeader("row" + (row + 1));
-						goals = goals.concat(rowGoals);
+					if (row + col === 4) {
+						let bltrGoals = getGoalsForHeader("bltr");
+						goals = goals.concat(bltrGoals);
+					}
 
-						let colGoals = getGoalsForHeader("col" + (col + 1));
-						goals = goals.concat(colGoals);
+					let isValid = true;
 
-						if (row === col) {
-							let tlbrGoals = getGoalsForHeader("tlbr");
-							goals = goals.concat(tlbrGoals);
+					for (let k = 0; k < goals.length; k++) {
+						let otherGoal = goals[k];
+
+						if (otherGoal.row === row && otherGoal.col === col) {
+							continue;  // this is the goal being replaced
 						}
 
-						if (row + col === 4) {
-							let bltrGoals = getGoalsForHeader("bltr");
-							goals = goals.concat(bltrGoals);
+						if (!isAllowed(goal, otherGoal)) {
+							isValid = false;
+							break;
 						}
+					}
 
-						let isValid = true;
-
-						for (let k = 0; k < goals.length; k++) {
-							let otherGoal = goals[k];
-
-							if (otherGoal.row === row && otherGoal.col === col) {
-								continue;  // this is the goal being replaced
-							}
-
-							if (!isAllowed(goal, otherGoal)) {
-								isValid = false;
-								break;
-							}
-						}
-
-						if (isValid) {
-							return goal;
-						}
+					if (isValid) {
+						return goal;
 					}
 				}
 			}
 		}
-
-		return null;
 	}
 
 	// Initialize each cell
@@ -298,7 +282,7 @@ function init() {
 		cellGoals.push([]);
 		
 		for(let j = 0; j < 5; j++) {
-			let goal = nextGoal(i, j);
+			let goal = nextGoal();
 			setGoal(i, j, goal);
 			
 			let id = i + "_" + j;
@@ -325,9 +309,6 @@ function init() {
 	let highDifficultyLimit = baseDifficulty + Math.ceil(5 * averageDifficulty + 1.2 * Math.sqrt(5 * difficultyStdDev));  // give a litle more leeway on the harder side :)
 	
 	do {
-		if (iterations === 15) {
-			console.log("debug");
-		}
 		nothingChanged = true;
 
 		let dbg_msg = "";
@@ -365,7 +346,7 @@ function init() {
 
 					let row = goal1.row;
 					let col = goal1.col;
-					newGoal = nextGoal(row, col, goal1.difficulty);
+					newGoal = replaceGoal(row, col, goal1.difficulty);
 					setGoal(row, col, newGoal);
 				}
 				
@@ -398,7 +379,7 @@ function init() {
 					
 					let targetDifficulty = goal.difficulty + deltaPerCell - accumulatedError;
 					
-					let newGoal = nextGoal(row, col, targetDifficulty);
+					let newGoal = replaceGoal(row, col, targetDifficulty);
 					setGoal(row, col, newGoal);
 
 					accumulatedError = newGoal.difficulty - targetDifficulty;
