@@ -207,7 +207,7 @@ function initGoals() {
 		"wingcap",
 		"metalcap",
 		"vanishcap",
-		"aquarium"
+		"aquarium",
 		"wmotr",
 		
 		"secrets",    // secret stars
@@ -648,29 +648,29 @@ function initGoals() {
 		{
 			description: "Collect 5 stars with names starting with F",
 			difficulty: -1,
-			tags: [],
-			tooltip: "Official star select screen names. Secret stars don't count.\nHINT:\nBoB: 1\nWF: 1\nCCM: 1\nSSL: 1\nTHI: 1\n"
+			tags: ["bob", "wf", "ccm", "ssl", "thi"],
+			tooltip: "Official star select screen names. Secret stars don't count.\nHINT:\nBoB: 1\nWF: 1\nCCM: 1\nSSL: 1\nTHI: 1"
 		},
 		
 		{
 			description: "Collect 5 stars with names starting with B",
 			difficulty: -1,
-			tags: [],
-			tooltip: "Official star select screen names. Secret stars don't count.\nHINT:\nBoB: 2\nWF: 1\nJRB: 1\nCCM: 1\nBBH: 1\nLLL: 2\nDDD: 1\nTTM: 2\n"
+			tags: ["bob", "wf", "jrb", "ccm", "bbh", "lll", "ddd", "ttm"],
+			tooltip: "Official star select screen names. Secret stars don't count.\nHINT:\nBoB: 2\nWF: 1\nJRB: 1\nCCM: 1\nBBH: 1\nLLL: 2\nDDD: 1\nTTM: 2"
 		},
 		
 		{
 			description: "Collect 5 stars with names starting with S",
 			difficulty: -1,
-			tags: [],
-			tooltip: "Official star select screen names. Secret stars don't count.\nHINT:\nWF: 1\nCCM: 2\nBBH: 2\nHMC: 1\nSSL: 2\nWDW: 2\nTTM: 2\nTTC: 2\nRR: 2\n"
+			tags: ["wf", "ccm", "bbh", "hmc", "ssl", "wdw", "ttm", "ttc", "rr"],
+			tooltip: "Official star select screen names. Secret stars don't count.\nHINT:\nWF: 1\nCCM: 2\nBBH: 2\nHMC: 1\nSSL: 2\nWDW: 2\nTTM: 2\nTTC: 2\nRR: 2"
 		},
 		
 		{
 			description: "Collect 5 stars with names starting with a vowel (A, E, I, O, U)",
 			difficulty: -1,
-			tags: [],
-			tooltip: "Official star select screen names. Secret stars don't count. 100 coin star doesn't count. Numbers (such as \"8\" don't count).\nHINT:\nBBH: 1\nHMC: 2\nLLL: 1\nSSL: 2\nWDW: 1\n"
+			tags: ["bbh", "hmc", "lll", "ssl", "wdw"],
+			tooltip: "Official star select screen names. Secret stars don't count. 100 coin star doesn't count. Numbers (such as \"8\" don't count).\nHINT:\nBBH: 1\nHMC: 2\nLLL: 1\nSSL: 2\nWDW: 1"
 		},
 		
 		{
@@ -774,14 +774,14 @@ function initGoals() {
 		{
 			description: "Press 4 different purple ! switches in non-Bowser stages; (*) after each",
 			difficulty: -1,
-			tags: ["bob", "hmc", "ddd", "wdw", "thi", "rr", "purpleswitch"],
+			tags: ["bob", "hmc", "ddd", "wdw", "thi", "rr", "purpleswitches"],
 			tooltip: "No extra explanation"
 		},
 
 		{
 			description: "Press 6 different purple ! switches in non-Bowser stages; (*) after each",
 			difficulty: -1,
-			tags: ["bob", "hmc", "ddd", "wdw", "thi", "rr", "purpleswitch"],
+			tags: ["bob", "hmc", "ddd", "wdw", "thi", "rr", "purpleswitches"],
 			tooltip: "No extra explanation"
 		},
 
@@ -842,6 +842,8 @@ function initGoals() {
 	if (true) {
 		let oneoffCount = 0;
 		for(let i = 0; i < possibleGoals.length; i++) {
+			let goal = possibleGoals[i];
+			
 			assert(goal.description !== "");
 			assert(goal.tags.length > 0);
 			
@@ -862,7 +864,7 @@ function initGoals() {
 		}
 
 		if (false) {
-			alert("Total # of goals: " + possibleGoals.length + "\nTotal number of one-off goals: " + oneoffCount + " (" + (oneoffCount / possibleGoals.length * 100) + "%)";
+			alert("Total # of goals: " + possibleGoals.length + "\nTotal number of one-off goals: " + oneoffCount + " (" + (oneoffCount / possibleGoals.length * 100) + "%)");
 		}
 	}
 }
