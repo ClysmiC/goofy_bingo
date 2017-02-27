@@ -140,10 +140,6 @@ function init() {
 			
 			let id = i + "_" + j;
 			let cell = $("#" + id);
-
-			if(i === 0 && j === 0) {
-				goal = possibleGoals[47];
-			}
 			
 			cell.text(goal.description);
 			cell.prop("title", goal.tooltip);
@@ -203,29 +199,38 @@ function initGoals() {
 		"sl",
 		"rr",
 		"ttc",
+		
 		"bitdwreds",
 		"bitfsreds",
 		"bitsreds",
-		"secrets",    // secret stars
-		"oneoff",     // things that only require you to do one thing in a level one time
-		"die",        // things that cause you to die often
-		"live",       // needing a high # of lives at the end
-		"signs",      // read signs
+		
 		"wingcap",
 		"metalcap",
 		"vanishcap",
 		"aquarium"
 		"wmotr",
+		
+		"secrets",    // secret stars
+		
+		"die",        // things that cause you to die often
+		"live",       // needing a high # of lives at the end
+		
+		"signs",      // read signs
+		
 		"nosynergy",  // pretty much a flat overhead... doesn't synergize with anything
-		"slides",
-
+		
+		"oneoff",     // things that only require you to do one thing in a level one time
+		
 		// Specific goal tags
+		"slides",
 		"spinykill",
-		"swimanimation"
+		"swimanimation",
+		"purpleswitches",
 	];
 
 	// CTRL-F 'dagger' to copy this, the unicode dagger -> \u2020
-	// note: id must equal the index in the array.
+	// NOTE: Difficulty may be a bit of a misnomer... it is more of a measure of how long it will take
+	// a decent player than it is of how hard it is
 	possibleGoals = [
 		{
 			description: "Collect all 5 coins from all 5 BoB poles, and pound them into the ground (*)",
@@ -769,7 +774,14 @@ function initGoals() {
 		{
 			description: "Press 4 different purple ! switches in non-Bowser stages; (*) after each",
 			difficulty: -1,
-			tags: ["hmc", "ddd", "wdw", "thi"],
+			tags: ["bob", "hmc", "ddd", "wdw", "thi", "rr", "purpleswitch"],
+			tooltip: "No extra explanation"
+		},
+
+		{
+			description: "Press 6 different purple ! switches in non-Bowser stages; (*) after each",
+			difficulty: -1,
+			tags: ["bob", "hmc", "ddd", "wdw", "thi", "rr", "purpleswitch"],
 			tooltip: "No extra explanation"
 		},
 
@@ -816,23 +828,42 @@ function initGoals() {
 		}
 	];
 
-	// verify integrity of all goals
+	
+	// Give ID's to goals
 	for(let i = 0; i < possibleGoals.length; i++) {
 		let goal = possibleGoals[i];
 		
 		goal.id = i;
-		assert(goal.description !== "");
-		assert(goal.tags.length > 0);
-		
-		for(let j = 0; j < goal.tags.length; j++) {
-			let tag = goal.tags[j];
-			assert(validTags.indexOf(tag) !== -1);
+	}
+
+
+	// verify integrity of goals
+	// only enable for development / testing
+	if (true) {
+		let oneoffCount = 0;
+		for(let i = 0; i < possibleGoals.length; i++) {
+			assert(goal.description !== "");
+			assert(goal.tags.length > 0);
+			
+			for(let j = 0; j < goal.tags.length; j++) {
+				let tag = goal.tags[j];
+				assert(validTags.indexOf(tag) !== -1);
+				assert(goal.tags.indexOf(tag) === goal.tags.lastIndexOf(tag));  // no duplicate tags
+
+				if (tag === "oneoff") {
+					oneoffCount += 1;
+				}
+			}
+
+			// TODO: enable this for release.
+			// Non-assigned difficulties are set to -1, but must be assigned
+			// before release!
+			// assert(goal.difficulty > 0);
 		}
 
-		// TODO: enable this for release.
-		// Non-assigned difficulties are set to -1, but must be assigned
-		// before release!
-		// assert(goal.difficulty > 0);
+		if (false) {
+			alert("Total # of goals: " + possibleGoals.length + "\nTotal number of one-off goals: " + oneoffCount + " (" + (oneoffCount / possibleGoals.length * 100) + "%)";
+		}
 	}
 }
 
