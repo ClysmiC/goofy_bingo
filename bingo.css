@@ -36,6 +36,7 @@ td {
 	border: 1px solid black;
 	padding: 5px;
 	background-color: LightGray;
+	visibility: hidden;
 }
 
 td:hover,
