@@ -51,7 +51,9 @@ function initGoals(seed) {
 		"uselesscaps",
 		"blueswitches",
 		"opencannons",
-		"usecannons"
+		"usecannons",
+		"endwithcoins",
+		"bitsallcoins"
 	];
 
 	// CTRL-F 'dagger' to copy this, the unicode dagger -> \u2020
@@ -370,7 +372,7 @@ function initGoals(seed) {
 		{
 			description: "Get all 80 coins in BitS",
 			difficulty: 15,
-			tags: ["bitsreds", "oneoff"],
+			tags: ["bitsreds", "bitsallcoins", "oneoff"],
 			tooltip: "No extra explanation"
 		},
 		
@@ -461,7 +463,7 @@ function initGoals(seed) {
 		{
 			description: "End the game with exactly 4 lives and 20 coins",
 			difficulty: 6,
-			tags: ["die"],  // die because you will usually have > 4 lives
+			tags: ["die", "endwithcoins"],  // die because you will usually have > 4 lives
 			tooltip: "lol"
 		},
 		

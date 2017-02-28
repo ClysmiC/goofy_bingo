@@ -63,6 +63,18 @@ function getTagSynergy(tag1, tag2) {
 		if (tag1 === "aquarium") {
 			return 4;
 		}
+
+		if (tag1 === "bitdwreds") {
+			return 2;
+		}
+
+		if (tag1 === "bitfsreds") {
+			return 3;
+		}
+
+		if (tag1 === "bitsreds") {
+			return 3;
+		}
 	}
 
 	if (match("peachslide", "slides")) {
@@ -87,6 +99,10 @@ function getTagSynergy(tag1, tag2) {
 
 	if (match("opencannons", "usecannons")) {
 		return 2;
+	}
+
+	if (match("endwithcoins", "bitsallcoins")) {
+		return -5;
 	}
 
 	return 0;

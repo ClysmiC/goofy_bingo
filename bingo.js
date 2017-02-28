@@ -327,7 +327,7 @@ function init() {
 		}
 
 		// DEV
-		// console.log(dbg_msg);
+		console.log(dbg_msg);
 
 		for (let i = 0; i < headers.length; i++) {
 			let header = headers[i];
