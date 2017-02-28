@@ -48,8 +48,16 @@ function getTagSynergy(tag1, tag2) {
 			return 4;
 		}
 
-		if (tag1.endsWith("cap")) {
+		if (tag1 === "metalcap") {
 			return 6;
+		}
+
+		if (tag1 === "vanishcap") {
+			return 10;
+		}
+
+		if (tag1 === "wingcap") {
+			return 3;
 		}
 
 		if (tag1 === "aquarium") {
@@ -108,7 +116,8 @@ function isAllowed(goal1, goal2) {
 					tag1 === "purpleswitches" ||
 					tag1 === "uselesscaps" ||
 					tag1 === "blueswitches" ||
-					tag1 === "cannons") {
+					tag1 === "opencannons" ||
+					tag1 === "signs") {
 					return false;
 				}
 			}

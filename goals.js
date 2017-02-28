@@ -68,7 +68,7 @@ function initGoals(seed) {
 
 		{
 			description: "Shoot out of all 6 cannons in BoB (*)",
-			difficulty: 5,
+			difficulty: 10,
 			tags: ["need_bob", "oneoff", "usecannons"],
 			tooltip: "No extra explanation"
 		},
@@ -82,14 +82,14 @@ function initGoals(seed) {
 
 		{
 			description: "Die to all 4 minibosses",
-			difficulty: 13,
+			difficulty: 16,
 			tags: ["need_bob", "need_wf", "need_ssl", "need_thi", "die"],
 			tooltip: "They must deal the killing blow that depletes your health to 0. Eyerok pushing you off the level does NOT count."
 		},
 
 		{
 			description: "Read all 13 tutorial signs in BoB (*)",
-			difficulty: 8,
+			difficulty: 7,
 			tags: ["need_bob", "signs", "oneoff"],
 			tooltip: "No extra explanation"
 		},
@@ -138,7 +138,7 @@ function initGoals(seed) {
 		
 		{
 			description: "Fall or jump off the ships in both JRB and RR; (*) after each (\u2020)",
-			difficulty: 12,
+			difficulty: 15,
 			tags: ["need_jrb", "need_rr"],
 			tooltip: "Jumping to the connected platform or plank in RR does not count. Shooting the cannon does not count."
 		},
@@ -183,7 +183,7 @@ function initGoals(seed) {
 
 		{
 			description: "Collect 3 stars in CCM while carrying a penguin",
-			difficulty: 6,
+			difficulty: 7,
 			tags: ["need_ccm"],
 			tooltip: "No extra explanation"
 		},
@@ -221,7 +221,7 @@ function initGoals(seed) {
 
 		{
 			description: "Collect Inside the Ancient Pyramid without entering from the top of the pyramid",
-			difficulty: 4,
+			difficulty: 5,
 			tags: ["need_ssl", "oneoff"],
 			tooltip: "No extra explanation"
 		},
@@ -298,7 +298,7 @@ function initGoals(seed) {
 		},
 		
 		{
-			description: "Collect 8 red coins in DDD when the sub is absent",
+			description: "Collect the 8 red coin star in DDD when the sub is absent",
 			difficulty: 12,
 			tags: ["need_ddd", "oneoff"],
 			tooltip: "No extra explanation"
@@ -341,7 +341,7 @@ function initGoals(seed) {
 		
 		{
 			description: "Collect Blast to the Lonely Mushroom in TTM with the cannon",
-			difficulty: 5,
+			difficulty: 6,
 			tags: ["need_ttm", "oneoff"],
 			tooltip: "No extra explanation"
 		},
@@ -362,7 +362,7 @@ function initGoals(seed) {
 		
 		{
 			description: "Collect Cruiser Crossing the Rainbow and 8 red coins in RR without wallkicking",
-			difficulty: 10,
+			difficulty: 11,
 			tags: ["need_rr"],
 			tooltip: "No extra explanation"
 		},
@@ -396,10 +396,10 @@ function initGoals(seed) {
 		},
 		
 		{
-			description: "Collect all the coins on all 3 slides",
+			description: "Collect all the coins on all 3 slides. Peach (80), CCM (77), TTM (62)",
 			difficulty: 10,
 			tags: ["slides", "need_ccm", "need_ttm"],
-			tooltip: "Peach Slide - 80 coins\nCCM Slide - 77 coins\nTTM Slide - 47 coins (be observant!)\nNote: Collecting stars is not required"
+			tooltip: "Peach Slide - 80 coins\nCCM Slide - 77 coins\nTTM Slide - 62 coins (be observant!)\nNote: Collecting stars is not required"
 		},
 		
 		{
@@ -453,7 +453,7 @@ function initGoals(seed) {
 		
 		{
 			description: "End the game with a prime number of stars",
-			difficulty: 6,
+			difficulty: 7,
 			tags: ["nosynergy"],
 			tooltip: "17, 19, 23, 29, 31, 37, 41, etc..."
 		},
@@ -488,14 +488,14 @@ function initGoals(seed) {
 		
 		{
 			description: "Trigger 4 \"star spawn\" animations in a single visit to a level, and collect a DIFFERENT star",
-			difficulty: 6,
+			difficulty: 9,
 			tags: ["bob", "ccm", "jrb", "bbh", "ssl", "lll", "ddd", "wdw", "thi", "sl", "oneoff"],
 			tooltip: "Any star that starts off obtainable in the level without triggering a \"star spawn\" animation does not count towards the 4. If you triggered 5 spawns, you may collect any of them as your \"different\" star."
 		},
 		
 		{
 			description: "Collect 2 stars in different stages while having exactly 99 coins",
-			difficulty: 8,
+			difficulty: 9,
 			tags: ["nosynergy"],
 			tooltip: "No extra explanation"
 		},
@@ -550,10 +550,10 @@ function initGoals(seed) {
 		},
 
 		{
-			description: "Get thrown by all 5 Chuckyas; (*) after each (except BitS)",
-			difficulty: 18,
-			tags: ["need_wdw", "need_thi", "need_ttm", "need_rr"],
-			tooltip: "No extra explanation"
+			description: "Get thrown by all 5 Chuckyas; (*) after each",
+			difficulty: 24,
+			tags: ["need_wdw", "need_thi", "need_ttm", "need_rr", "bitsreds"],
+			tooltip: "For BitS, you must collect the red coin star"
 		},
 
 		{
@@ -573,7 +573,7 @@ function initGoals(seed) {
 
 		{
 			description: "Destroy all 5 crazy-boxes and collect every resulting coin; (*) after each (\u2020)",
-			difficulty: 10,
+			difficulty: 11,
 			tags: ["need_ssl", "need_lll", "need_bbh", "need_ttm"],
 			tooltip: "You can destroy multiple crazy boxes in one level and then only need to collect 1 star afterwards"
 		},
@@ -594,14 +594,14 @@ function initGoals(seed) {
 
 		{
 			description: "Press 4 different purple ! switches in non-Bowser stages; (*) after each",
-			difficulty: 6,
+			difficulty: 8,
 			tags: ["bob", "hmc", "ddd", "wdw", "thi", "rr", "purpleswitches"],
 			tooltip: "No extra explanation"
 		},
 
 		{
 			description: "Press 6 different purple ! switches in non-Bowser stages; (*) after each",
-			difficulty: 9,
+			difficulty: 13,
 			tags: ["bob", "hmc", "ddd", "wdw", "thi", "rr", "purpleswitches"],
 			tooltip: "No extra explanation"
 		},
