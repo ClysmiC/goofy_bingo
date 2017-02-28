@@ -4,8 +4,6 @@ var goalsByDifficulty;
 var cellGoals = [];
 var goalOrder = [];
 
-var baseDifficulty = 30;  // everything row has some "base" difficulty of beating the game
-
 var averageDifficulty;
 var difficultyStdDev;
 
@@ -305,8 +303,8 @@ function init() {
 	let nothingChanged;
 	let iterations = 0;
 	let headers = ["row1", "row2", "row3", "row4", "row5", "col1", "col2", "col3", "col4", "col5", "tlbr", "bltr"];
-	let lowDifficultyLimit = baseDifficulty + Math.floor(5 * averageDifficulty - Math.sqrt(5 * difficultyStdDev));
-	let highDifficultyLimit = baseDifficulty + Math.ceil(5 * averageDifficulty + 1.2 * Math.sqrt(5 * difficultyStdDev));  // give a litle more leeway on the harder side :)
+	let lowDifficultyLimit = Math.floor(5 * averageDifficulty - Math.sqrt(5 * difficultyStdDev));
+	let highDifficultyLimit = Math.ceil(5 * averageDifficulty + 1.2 * Math.sqrt(5 * difficultyStdDev));  // give a litle more leeway on the harder side :)
 	
 	do {
 		nothingChanged = true;

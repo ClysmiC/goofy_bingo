@@ -140,7 +140,7 @@ function initGoals(seed) {
 		
 		{
 			description: "Fall or jump off the ships in both JRB and RR; (*) after each (\u2020)",
-			difficulty: 15,
+			difficulty: 13,
 			tags: ["need_jrb", "need_rr"],
 			tooltip: "Jumping to the connected platform or plank in RR does not count. Shooting the cannon does not count."
 		},
@@ -161,7 +161,7 @@ function initGoals(seed) {
 
 		{
 			description: "Collect the red coin star in CCM with 0 or 1 A presses (\u2020)",
-			difficulty: 8,
+			difficulty: 6,
 			tags: ["need_ccm", "oneoff"],
 			tooltip: "Hint: You will almost certainly need 1 A press. Use it wisely."
 		},
@@ -532,7 +532,7 @@ function initGoals(seed) {
 
 		{
 			description: "Experience death by fire, drowning, and electrecution",
-			difficulty: 12,
+			difficulty: 10,
 			tags: ["die", "wdw"],
 			tooltip: "No extra explanation"
 		},

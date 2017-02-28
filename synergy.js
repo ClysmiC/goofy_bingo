@@ -149,7 +149,7 @@ function evaluateRow(row) {
 	assert(row.length === 5);
 
 	let result = {
-		totalDifficulty: baseDifficulty,
+		totalDifficulty: 0,
 		ruleBreakers: [],
 	}
 	
